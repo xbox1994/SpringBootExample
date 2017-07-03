@@ -12,15 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.http.MediaType;
 
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 public class UserServiceTest extends BaseTest{
     private static final Long INVALID_ID = 100l;
+    private static final Long VALID_ID = 1l;
 
     @MockBean
     private UserRepository userRepository;
@@ -47,15 +44,15 @@ public class UserServiceTest extends BaseTest{
     @ParameterizedTest
     @ValueSource(longs = { 1l, 2l, 3l })
     public void should_return_user_from_redis_when_request_twice(Long id) throws Exception{
-        this.mvc.perform(get("/users/" + id).accept(MediaType.APPLICATION_JSON));
-        this.mvc.perform(get("/users/" + id).accept(MediaType.APPLICATION_JSON));
+        userService.findOne(id);
+        userService.findOne(id);
         verify(redisTemplate.opsForValue(), times(2)).get(anyString());
         verify(redisTemplate.opsForValue(), times(1)).set(anyString(), any());
     }
 
     @Test
     public void should_return_user_from_mysql_when_request_once() throws Exception{
-        this.mvc.perform(get("/users/" + 1).accept(MediaType.APPLICATION_JSON));
+        userService.findOne(VALID_ID);
         verify(userRepository).findOne(anyLong());
         verify(redisTemplate.opsForValue()).set(anyString(), any());
     }

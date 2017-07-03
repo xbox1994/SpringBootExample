@@ -11,7 +11,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 @EnableAutoConfiguration
 public class CommonEnvConfiguration {
 
-    @Profile("!test")
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate template = new RedisTemplate();
