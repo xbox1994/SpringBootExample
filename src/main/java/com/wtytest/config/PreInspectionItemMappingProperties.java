@@ -4,16 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
 @Setter
-@Configuration
 @ToString
-@ConfigurationProperties(prefix = "carItemMapping")
+@Component
+@ConfigurationProperties
+@PropertySource(value = "classpath:config/carItemMapping.properties", encoding = "UTF-8")
 public class PreInspectionItemMappingProperties {
     private Map<String, String> defaultCarItemMapping = new HashMap<>();
     private Map<String, String> smartCarItemMapping = new HashMap<>();

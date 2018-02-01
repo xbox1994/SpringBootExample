@@ -7,7 +7,6 @@ import com.wtytest.entity.User;
 import com.wtytest.helper.PdfUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,6 @@ import java.util.logging.Logger;
  */
 @Service
 @Slf4j
-@EnableConfigurationProperties(value = {PreInspectionItemMappingProperties.class, ServiceContractBaseDataProperties.class})
 public class UserService {
     @Autowired
     private UserRepository userRepository;
