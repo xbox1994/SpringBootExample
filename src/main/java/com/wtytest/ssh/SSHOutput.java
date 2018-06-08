@@ -24,4 +24,8 @@ public class SSHOutput {
         this.stdout = stdout;
         this.stderr = stderr;
     }
+
+    public static SSHOutput empty(){
+        return new SSHOutput("", "");
+    }
 }

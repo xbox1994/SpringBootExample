@@ -7,7 +7,6 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 public class SSHManager {
     private static final int PORT = 22;
@@ -44,7 +43,7 @@ public class SSHManager {
         session.connect(timeout);
     }
 
-    public Optional<SSHOutput> sendCommand(String command) {
+    public SSHOutput sendCommand(String command) {
         String stdout;
         String stderr;
         try {
@@ -61,10 +60,10 @@ public class SSHManager {
             channel.disconnect();
         } catch (IOException | JSchException e) {
             e.printStackTrace();
-            return Optional.empty();
+            return null;
         }
 
-        return Optional.of(new SSHOutput(stdout, stderr));
+        return new SSHOutput(stdout, stderr);
     }
 
     public void close() {
